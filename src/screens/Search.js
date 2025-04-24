@@ -47,18 +47,17 @@ export default function Search({ navigation }) {
   const toggleFavorite = (item) => {
     if (favoritedBooks[item.id]) {
       removeFromWishlist(item.id);
-      setFavoritedBooks(prev => ({...prev, [item.id]: false}));
+      setFavoritedBooks((prev) => ({ ...prev, [item.id]: false }));
     } else {
       addToWishlist(item);
-      setFavoritedBooks(prev => ({...prev, [item.id]: true}));
+      setFavoritedBooks((prev) => ({ ...prev, [item.id]: true }));
     }
   };
 
   const renderBook = ({ item }) => (
     <TouchableOpacity
       style={styles.bookItem}
-      onPress={() => navigation.navigate('BookDetails', { book: item })}
-    >
+      onPress={() => navigation.navigate('BookDetails', { book: item })}>
       {item.volumeInfo?.imageLinks?.thumbnail && (
         <Image
           source={{ uri: item.volumeInfo.imageLinks.thumbnail }}
@@ -75,8 +74,7 @@ export default function Search({ navigation }) {
       </View>
       <TouchableOpacity
         style={styles.heartButton}
-        onPress={() => toggleFavorite(item)}
-      >
+        onPress={() => toggleFavorite(item)}>
         <Feather
           name="heart"
           size={24}
@@ -92,8 +90,8 @@ export default function Search({ navigation }) {
   );
 
   return (
-    <ScreenWrapper>
-      <View style={styles.content}>
+    <ScreenWrapper showHeader={false}>
+      <View style={styles.content} showHeader={false}>
         <Text style={styles.title}>🔍 Buscar Livros</Text>
 
         <TextInput
@@ -111,6 +109,7 @@ export default function Search({ navigation }) {
           renderItem={renderBook}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
+          showHeader={false}
         />
       </View>
     </ScreenWrapper>

@@ -13,7 +13,10 @@ const WishlistStack = createStackNavigator();
 const SearchStackScreen = ({ addToWishlist, wishlist }) => {
   return (
     <SearchStack.Navigator>
-      <SearchStack.Screen name="SearchMain">
+      <SearchStack.Screen
+        name="SearchMain"
+        options={{ headerShown: false }} // 👈 isso esconde o cabeçalho
+      >
         {(props) => (
           <Search
             {...props}
@@ -38,7 +41,10 @@ const SearchStackScreen = ({ addToWishlist, wishlist }) => {
 const WishlistStackScreen = ({ wishlist, removeFromWishlist }) => {
   return (
     <WishlistStack.Navigator>
-      <WishlistStack.Screen name="WishlistMain">
+      <WishlistStack.Screen
+        name="WishlistMain"
+        options={{ headerShown: false }} // 👈 isso esconde o cabeçalho
+      >
         {(props) => (
           <Wishlist
             {...props}
@@ -66,7 +72,16 @@ export default function TabNavigator({
   removeFromWishlist,
 }) {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false, // 👈 Remove o cabeçalho de todas as abas
+        tabBarStyle: {
+          backgroundColor: '#1e3c72',
+          borderTopColor: 'transparent',
+        },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#ccc',
+      }}>
       <Tab.Screen name="Feed" component={Feed} />
       <Tab.Screen name="Pesquisa">
         {(props) => (

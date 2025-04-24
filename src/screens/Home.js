@@ -1,3 +1,5 @@
+import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import {
   View,
@@ -6,30 +8,43 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Feather } from '@expo/vector-icons';
 
 export default function Home({ navigation }) {
-  const [quote, setQuote] = useState(null);
+  const [quote, setQuote] = useState({
+    quote: 'A leitura é para o intelecto o que o exercício é para o corpo.',
+    author: 'Joseph Addison',
+  });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const fetchQuote = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        'https://api.quotable.io/random?tags=literature'
-      );
+      setError(false);
+
+      const response = await fetch('https://recite-production.up.railway.app/api/v1/quotes');
+
+      if (!response.ok) {
+        throw new Error(`Erro HTTP! Status: ${response.status}`);
+      }
+
       const data = await response.json();
-      setQuote({
-        text: data.content,
-        author: data.author,
-      });
+
+      // Verifica se a resposta tem a estrutura esperada
+      if (data.success && data.quotes && Array.isArray(data.quotes)) {
+        const randomIndex = Math.floor(Math.random() * data.quotes.length);
+        const randomQuote = data.quotes[randomIndex];
+
+        setQuote({
+          quote: randomQuote.quote,
+          author: randomQuote.author,
+        });
+      } else {
+        throw new Error('Estrutura de dados inesperada da API');
+      }
     } catch (error) {
-      console.error('Error fetching quote:', error);
-      setQuote({
-        text: 'A leitura é para o intelecto o que o exercício é para o corpo.',
-        author: 'Joseph Addison',
-      });
+      console.error('Erro ao buscar citação:', error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -53,8 +68,13 @@ export default function Home({ navigation }) {
             <ActivityIndicator size="small" color="#fff" />
           ) : (
             <>
-              <Text style={styles.quoteText}>"{quote.text}"</Text>
+              <Text style={styles.quoteText}>"{quote.quote}"</Text>
               <Text style={styles.quoteAuthor}>— {quote.author}</Text>
+              {error && (
+                <Text style={styles.errorText}>
+                  Não foi possível carregar uma nova citação
+                </Text>
+              )}
               <TouchableOpacity
                 onPress={fetchQuote}
                 style={styles.refreshButton}>
@@ -121,6 +141,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     width: '100%',
     alignItems: 'center',
+    position: 'relative',
   },
   quoteText: {
     fontSize: 18,
@@ -135,6 +156,12 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
     textAlign: 'right',
     width: '100%',
+  },
+  errorText: {
+    fontSize: 14,
+    color: 'rgba(255,100,100,0.8)',
+    textAlign: 'center',
+    marginTop: 10,
   },
   refreshButton: {
     position: 'absolute',

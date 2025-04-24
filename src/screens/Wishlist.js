@@ -45,7 +45,7 @@ export default function Wishlist({ navigation }) { // Adicionei navigation nas p
   );
 
   return (
-    <ScreenWrapper>
+    <ScreenWrapper showHeader={false}>
       <View style={styles.container}>
         <Text style={styles.title}>❤️ Meus Favoritos</Text>
         <FlatList
