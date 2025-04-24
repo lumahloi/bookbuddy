@@ -11,7 +11,7 @@
 ![Search](./screenshots/search.jpeg)
 ![List](./screenshots/list.jpeg)
 ![Profile](./screenshots/profile.jpeg)
-![Details](./screenshots/home.jpeg)
+![Details](./screenshots/details.jpeg)
 
 ## Funcionalidades
 - Citações de livros através da API Recite;
