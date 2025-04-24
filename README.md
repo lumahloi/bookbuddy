@@ -4,7 +4,14 @@
 **BookBuddy** é uma rede social simples focada no compartilhamento de opiniões sobre livros. Conecte-se com novas amizades, deixe suas opiniões e organize seus livros em listas.
 
 ## Imagens
-![Image 1](1725490549933.jpg)
+![Home](./screenshots/home.jpeg)
+![Sign up](./screenshots/signup.jpeg)
+![Sign in](./screenshots/signin.jpeg)
+![Feed](./screenshots/feed.jpeg)
+![Search](./screenshots/search.jpeg)
+![List](./screenshots/list.jpeg)
+![Profile](./screenshots/profile.jpeg)
+![Details](./screenshots/home.jpeg)
 
 ## Funcionalidades
 - Citações de livros através da API Recite;
